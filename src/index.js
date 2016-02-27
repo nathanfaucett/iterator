@@ -8,6 +8,7 @@ var KEYS = 0,
     ENTRIES = 2,
     ITERATOR_SYMBOL = typeof(Symbol) === "function" ? Symbol.iterator : false,
     IS_ITERATOR = "__ITERATOR__",
+    EMPTY = new Iterator(createDone),
     IteratorPrototype;
 
 
@@ -18,6 +19,8 @@ function Iterator(next) {
     this.next = next;
 }
 IteratorPrototype = Iterator.prototype;
+
+Iterator.EMPTY = EMPTY;
 
 function isIterator(value) {
     return !!(value && value[IS_ITERATOR]);
