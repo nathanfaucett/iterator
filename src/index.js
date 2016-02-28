@@ -1,14 +1,14 @@
 var isFunction = require("is_function"),
-    isUndefined = require("is_undefined"),
-    defineProperty = require("define_property");
+    isUndefined = require("is_undefined");
 
 
 var KEYS = 0,
     VALUES = 1,
     ENTRIES = 2,
+
     ITERATOR_SYMBOL = typeof(Symbol) === "function" ? Symbol.iterator : false,
-    IS_ITERATOR = "__ITERATOR__",
     EMPTY = new Iterator(createDone),
+
     IteratorPrototype;
 
 
@@ -21,18 +21,6 @@ function Iterator(next) {
 IteratorPrototype = Iterator.prototype;
 
 Iterator.EMPTY = EMPTY;
-
-function isIterator(value) {
-    return !!(value && value[IS_ITERATOR]);
-}
-Iterator.isIterator = isIterator;
-
-defineProperty(IteratorPrototype, IS_ITERATOR, {
-    configurable: false,
-    enumerable: false,
-    writable: false,
-    value: true
-});
 
 function IteratorValue(value, done) {
     this.value = value;
@@ -62,12 +50,12 @@ function createDone() {
 Iterator.createDone = createDone;
 
 function getIterator(iterable) {
-    var iteratorFn = iterable && ((ITERATOR_SYMBOL && iterable[ITERATOR_SYMBOL]) || iterable.iterator);
+    var iteratorFn = iterable && (ITERATOR_SYMBOL ? iterable[ITERATOR_SYMBOL] : iterable.iterator);
 
     if (isFunction(iteratorFn)) {
         return iteratorFn;
     } else {
-        return null;
+        return void(0);
     }
 }
 Iterator.getIterator = getIterator;
@@ -78,7 +66,7 @@ function hasIterator(iterable) {
 Iterator.hasIterator = hasIterator;
 
 function isIterator(iterator) {
-    return !!(iterator && isFunction(iiterator.next));
+    return !!(iterator && isFunction(iterator.next));
 }
 Iterator.isIterator = isIterator;
 
