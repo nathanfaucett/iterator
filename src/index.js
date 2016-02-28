@@ -50,7 +50,7 @@ function createDone() {
 Iterator.createDone = createDone;
 
 function getIterator(iterable) {
-    var iteratorFn = iterable && (ITERATOR_SYMBOL ? iterable[ITERATOR_SYMBOL] : iterable.iterator);
+    var iteratorFn = iterable && (ITERATOR_SYMBOL && iterable[ITERATOR_SYMBOL] || iterable.iterator);
 
     if (isFunction(iteratorFn)) {
         return iteratorFn;
