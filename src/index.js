@@ -1,5 +1,5 @@
-var isFunction = require("is_function"),
-    isUndefined = require("is_undefined");
+var isFunction = require("@nathanfaucett/is_function"),
+    isUndefined = require("@nathanfaucett/is_undefined");
 
 
 var KEYS = 0,
