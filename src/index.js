@@ -1,4 +1,5 @@
-var isFunction = require("@nathanfaucett/is_function"),
+var apply = require("@nathanfaucett/apply"),
+    isFunction = require("@nathanfaucett/is_function"),
     isUndefined = require("@nathanfaucett/is_undefined");
 
 
@@ -58,7 +59,17 @@ function getIterator(iterable) {
         return void(0);
     }
 }
-Iterator.getIterator = getIterator;
+Iterator.getIterator = function(iterable) {
+    var iteratorFn = getIterator(iterable);
+
+    if (iteratorFn) {
+        return function fn() {
+            return apply(iteratorFn, arguments, iterable);
+        };
+    } else {
+        return void(0);
+    }
+};
 
 function hasIterator(iterable) {
     return !!getIterator(iterable);
